@@ -1,0 +1,25 @@
+
+=== dados
+palavras: 207 | experiencias: 2
+presentes: {"resumo":true,"competencias":true,"experiencia":true,"formacao":true,"idiomas":true,"certificacoes":true,"projetos":false,"outros":false}
+skils: ["Power BI","SQL","Excel avançado","VBA","estatística descritiva","comunicação","trabalho em equipe"]
+secoes: resumo(1) experiencia(10) formacao(1) competencias(1) idiomas(1) certificacoes(2)
+-- linhas reconhecidas como titulo:
+   "Objetivo" → resumo
+   "Experiência" → experiencia
+   "Formação" → formacao
+   "Competências" → competencias
+   "Idiomas" → idiomas
+   "Cursos e certificações" → certificacoes
+
+=== cs
+palavras: 162 | experiencias: 2
+presentes: {"resumo":true,"competencias":true,"experiencia":true,"formacao":true,"idiomas":true,"certificacoes":false,"projetos":false,"outros":false}
+skils: ["Atendimento ao cliente","Zendesk","Excel intermediário","documentação","comunicação clara","organização"]
+secoes: resumo(1) experiencia(8) formacao(1) competencias(1) idiomas(1)
+-- linhas reconhecidas como titulo:
+   "Perfil" → resumo
+   "Experiência profissional" → experiencia
+   "Formação Acadêmica" → formacao
+   "Habilidades" → competencias
+   "Idiomas" → idiomas

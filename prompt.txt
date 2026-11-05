@@ -1,0 +1,68 @@
+Entendendo o Desafio
+Agora é a sua hora de praticar, aprender fazendo e colocar no ar uma aplicação que resolve um problema conhecido: currículo bom que nunca chega no RH, porque o ATS barrou antes.
+
+Ferramenta do Desafio:
+https://lovable.dev
+
+Nas Aulas, o Expert Bruno constrói o JobMatch ATS do zero, do primeiro prompt até o site publicado. Agora é a sua vez, com o seu tema e as suas escolhas.
+
+O Que Criar
+Uma aplicação web que compara um currículo com uma vaga e devolve uma versão ATS friendly desse currículo. ATS é o Application Tracking System, o sistema que ranqueia candidatos antes de qualquer pessoa do RH ler alguma coisa.
+
+O núcleo é curto e precisa funcionar:
+
+A pessoa cola a descrição da vaga;
+A pessoa cola o próprio currículo;
+A aplicação mostra o match, as palavras-chave encontradas e as que faltam;
+A aplicação gera a versão ajustada do currículo, pronta para exportar.
+Uma regra vale para a aplicação inteira: ela melhora como a pessoa se apresenta e nunca inventa experiência que a pessoa não tem. Bruno deixa isso escrito na própria interface, e vale trazer a ideia para a sua.
+
+Como Fazer
+Não existe repositório base aqui. Você constrói do zero, e o caminho que o Expert mostra tem quatro passos:
+
+Escreva o mega prompt. Peça a uma IA generativa um prompt único, em Markdown, que descreva a aplicação inteira. Cite o design system shadcn/ui e as cores da sua paleta;
+Gere a primeira versão. Cole esse prompt no Lovable. O modo Build executa direto, e o modo Plan mostra a abordagem antes, para você discutir e ajustar;
+Refine o que veio. Selecione o elemento na tela e peça a mudança só nele, ou descreva a nova funcionalidade no chat. Foi assim que a exportação do currículo em PDF entrou;
+Publique. Em Publish você define nome, descrição e imagem social, e a aplicação vai ao ar. Domínio próprio é opcional.
+A conta gratuita do Lovable dá créditos por dia, e eles bastam para o Desafio. Comece pelo núcleo: login, dashboard e integrações vêm depois, se vierem.
+
+Ideias para Evoluir
+Exportar o currículo também em .docx, para a pessoa editar antes de enviar;
+Guardar o histórico das análises em um banco de dados;
+Criar login, com e-mail de confirmação pelo conector Resend;
+Montar um dashboard que mostre a evolução do match entre as versões;
+Especializar a saída em um nicho, como vagas de tecnologia ou primeiro emprego;
+Preparar a aplicação para ser encontrada, com SEO e com GEO, a otimização para buscas dentro das IAs.
+Se você ainda está começando, tudo bem. Uma aplicação pequena, no ar e bem explicada vale mais que uma ambiciosa que ninguém consegue abrir.
+
+Uma Ajuda durante o Caminho
+Se travar em algum ponto, o DIO Agent ajuda a destravar o raciocínio:
+
+Preciso criar no Lovable um app que compara um currículo
+com uma descrição de vaga e gera uma versão ATS friendly.
+
+Me ajude a escrever o mega prompt em Markdown, com as telas,
+o fluxo da análise e o design system.
+
+Importante: não quero uma resposta pronta para copiar.
+Quero entender o processo e construir a minha.
+O Que Entregar
+Publique a aplicação e crie um repositório na sua conta do GitHub, para onde o Lovable exporta o código. No README.md, explique:
+
+Qual problema a sua aplicação resolve;
+O mega prompt que você usou, e o que mudou nele até a versão final;
+Como a análise funciona, da vaga colada até o currículo ajustado;
+Que ajustes você pediu depois da primeira geração, e por quê;
+O endereço da aplicação publicada.
+Print da análise e exemplo de uso contam muito. Evidência de que a aplicação roda é o que mais pesa em um portfólio.
+
+Antes de submeter, confira:
+
+A aplicação está publicada e abre para quem tem o endereço;
+Todo arquivo e pasta citada no README existem e têm conteúdo;
+O link enviado é o do repositório, não o da aplicação nem o de um arquivo;
+O repositório está na sua conta e público;
+Nenhuma chave, token ou senha ficou versionada;
+O nome do repositório ficou legível, em minúsculas e sem acento.
+Resultado Esperado
+Ao final, você terá um produto no ar, com endereço próprio, resolvendo um problema real de quem procura vaga. Mais que a aplicação, vale o processo: quem abre o seu repositório entende como você descreveu a ideia, o que a IA entregou e o que você decidiu mudar. É esse tipo de projeto que rende conversa em entrevista.
