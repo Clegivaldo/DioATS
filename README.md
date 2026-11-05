@@ -147,7 +147,7 @@ O projeto nasceu de um prompt único em Markdown que descreve a aplicação inte
 telas, algoritmo, design system, critérios de aceite. O arquivo completo está em
 [`PROMPT.md`](./PROMPT.md); a versão integral está reproduzida abaixo.
 
-```text
+````text
 # Mega prompt — JobMatch ATS
 
 Este é o prompt único que descreve a aplicação inteira. É o documento de origem do projeto:
@@ -444,7 +444,7 @@ Tabs/segmented control, Tooltip, Separator, Alert), com `class-variance-authorit
 - README em português com: problema, mega prompt, como a análise funciona, o que mudou depois da
   primeira geração e por quê, prints da análise e endereço da aplicação.
 
-```
+````
 
 ### O que mudou no prompt até a versão final
 
