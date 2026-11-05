@@ -11,3 +11,9 @@ Thumbs.db
 .wrangler
 freebuff.wrangler.jsonc
 *.log
+
+# artefatos locais dos scripts de diagnóstico
+.eval.mjs
+.eval.txt
+.debug.mjs
+.debug.txt
