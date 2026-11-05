@@ -17,3 +17,7 @@ freebuff.wrangler.jsonc
 .eval.txt
 .debug.mjs
 .debug.txt
+
+# artefatos da auditoria
+.audit.mjs
+.audit.txt
