@@ -63,6 +63,16 @@ O `audit.ts` roda casos de currículo colados de PDF/DOCX (sem títulos, título
 markdown) e falha se a experiência for perdida ou se um termo ausente virar competência no currículo
 gerado.
 
+O PDF também é conferido de verdade, e não só na aparência. `export-pdf.mjs` abre o app em um
+Chromium headless, roda o fluxo completo, clica em “Exportar PDF” e audita o arquivo: número e
+tamanho das páginas, margens, fonte mínima, vazamento de interface e texto selecionável em cada
+página.
+
+```bash
+npm run dev                      # em outro terminal
+npm run verify:pdf               # gera e audita docs/curriculo-exemplo.pdf e docs/curriculo-paginado.pdf
+```
+
 ---
 
 ## Como a análise funciona: da vaga colada até o currículo ajustado
@@ -386,8 +396,10 @@ Tabs/segmented control, Tooltip, Separator, Alert), com `class-variance-authorit
 - Mobile first: uma coluna, cartões empilhados, ações em largura total.
 
 ### Impressão
-- `@page A4`, margem 14mm; esconder tudo que não é a folha; texto 11,5pt preto; `break-inside:
-  avoid` por experiência; sem sombra/borda na folha.
+- `@page A4`, margem 12mm; esconder tudo que não é a folha; texto 11pt preto com entrelinha 1,5;
+  `break-inside: avoid` por experiência e `break-after: avoid` nos títulos; sem sombra/borda na folha.
+- Títulos de seção sem `letter-spacing`: o espaçamento entre letras faz o texto do PDF ser extraído
+  como “E X P E R I Ê N C I A”, e o ATS deixa de reconhecer a seção.
 
 ## 9. Copy e tom
 
@@ -488,6 +500,9 @@ Estes foram os refinamentos feitos olhando a aplicação rodando — cada um nas
 | Exemplos prontos no app (dois pares vaga/currículo) | Sem exemplo, a pessoa não sabe o nível de detalhe esperado no texto colado. |
 | Fallback para currículo sem títulos de seção (separa experiência, formação e competências por período e ano) | Currículo colado de PDF às vezes perde os títulos: o histórico inteiro virava cabeçalho e a seção de experiência desaparecia do resultado. Detectado pela auditoria de casos. |
 | “8 dígitos” deixou de valer como telefone no cabeçalho | O período “2019 - 2021” era lido como telefone e cortava o histórico no meio. Agora o critério é formato de telefone com DDD. |
+| Títulos de seção sem espaçamento entre letras na folha | Com `letter-spacing`, o PDF exportava “E X P E R I Ê N C I A” e o extrator do ATS não reconhecia a seção. Descoberto ao extrair o texto do PDF gerado. |
+| Impressão compactada (margem 12 mm, 11pt/1,5, títulos com menos respiro) e PDF auditado por script | Um currículo de três experiências vazava só “Idiomas” para a página 2. Agora fecha em uma página, com margens, fonte mínima e texto por página verificados em Chromium headless. |
+| Título do documento vira “Currículo — Nome” durante a impressão | O arquivo salvo herdava o título do site nos metadados; agora o nome sugerido é o do currículo. |
 
 ---
 
@@ -501,10 +516,12 @@ Estes foram os refinamentos feitos olhando a aplicação rodando — cada um nas
 ├── sites.manifest.json         # manifesto de publicação (Worker + assets estáticos)
 ├── worker/index.js             # Worker que serve o build (env.ASSETS)
 ├── docs/screenshots/           # prints usados neste README
+├── docs/*.pdf                  # PDFs gerados e auditados pelo script de verificação
 ├── scripts/
 │   ├── eval-engine.ts          # roda a análise dos exemplos e imprime tudo no terminal
 │   ├── debug-parse.ts          # mostra como o parser classifica cada linha do currículo
-│   └── audit.ts                # casos de currículo colado + verificação da regra de não inventar
+│   ├── audit.ts                # casos de currículo colado + verificação da regra de não inventar
+│   └── export-pdf.mjs          # gera o PDF em Chromium headless e audita páginas, margens e texto
 └── src/
     ├── App.tsx                 # estado do fluxo (colar → analisar → exportar)
     ├── components/
@@ -550,7 +567,10 @@ Estes foram os refinamentos feitos olhando a aplicação rodando — cada um nas
 - A variação (60%) cobre plural e pequenas mudanças de palavra, não sinônimos amplos
   (“painéis” não é reconhecido como “dashboards”).
 - Não há login, histórico nem banco de dados nesta versão — o desafio pede núcleo curto e funcionando.
-- A exportação em PDF depende do diálogo de impressão do navegador (escolher “Salvar como PDF”).
+- A exportação em PDF depende do diálogo de impressão do navegador (escolher “Salvar como PDF”),
+  que é o que mantém o texto selecionável. O arquivo é auditado por `scripts/export-pdf.mjs` (A4,
+  margens, fonte mínima e texto por página); currículos muito longos ainda podem passar de uma
+  página, mas o script reprova páginas quase vazias.
 
 ---
 
@@ -562,4 +582,5 @@ Estes foram os refinamentos feitos olhando a aplicação rodando — cada um nas
 - [x] Todo arquivo citado neste README existe e tem conteúdo
 - [x] Nenhuma chave, token ou senha no repositório (`.gitignore` cobre `.env*`)
 - [x] Build e typecheck passando (`npm run build`)
+- [x] PDF gerado e conferido fora do navegador (A4, uma página, texto selecionável)
 - [ ] Repositório público no GitHub (criar e enviar — instruções no fim desta seção)

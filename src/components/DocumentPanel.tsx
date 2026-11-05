@@ -55,7 +55,7 @@ export function DocumentPanel({ analysis, resume }: DocumentPanelProps) {
             <Download className="h-3.5 w-3.5" aria-hidden="true" />
             .txt
           </Button>
-          <Button size="sm" onClick={exportPdf}>
+          <Button size="sm" onClick={() => exportPdf(`Currículo — ${resume.name || "candidato"}`)}>
             <Printer className="h-3.5 w-3.5" aria-hidden="true" />
             Exportar PDF
           </Button>

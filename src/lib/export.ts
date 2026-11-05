@@ -38,7 +38,20 @@ export async function copyText(text: string): Promise<boolean> {
 /**
  * A exportação em PDF usa o diálogo de impressão do navegador ("Salvar como PDF").
  * O resultado é texto selecionável em uma coluna — exatamente o que o ATS lê.
+ * O título do documento vira o nome sugerido do arquivo e o título nos metadados do PDF.
  */
-export function exportPdf(): void {
+export function exportPdf(title?: string): void {
+  if (!title) {
+    window.print();
+    return;
+  }
+  const previous = document.title;
+  document.title = title;
+  const restore = () => {
+    document.title = previous;
+    window.removeEventListener("afterprint", restore);
+  };
+  window.addEventListener("afterprint", restore);
+  window.setTimeout(restore, 120000);
   window.print();
 }

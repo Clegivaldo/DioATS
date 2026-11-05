@@ -56,8 +56,10 @@
     @apply text-[24px] font-semibold leading-tight tracking-tight text-black;
   }
 
+  /* Sem letter-spacing: espaçamento entre letras faz o PDF exportar "E X P E R I Ê N C I A"
+     e quebra o reconhecimento do título pelo ATS. */
   .resume-paper h2 {
-    @apply mt-5 mb-1.5 border-b border-[#d7d7d7] pb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-black;
+    @apply mt-5 mb-1.5 border-b border-[#d7d7d7] pb-1 text-[11px] font-bold uppercase tracking-normal text-black;
   }
 
   .resume-paper p {
@@ -81,7 +83,7 @@
 @media print {
   @page {
     size: A4;
-    margin: 14mm 15mm;
+    margin: 12mm 14mm;
   }
 
   html,
@@ -104,7 +106,29 @@
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
-    font-size: 11.5pt;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  .resume-paper h1 {
+    font-size: 20pt;
+  }
+
+  /* Compacta o PDF o suficiente para um currículo de uma página não vazar
+     uma seção inteira para a página 2. */
+  .resume-paper h2 {
+    margin-top: 11px;
+    margin-bottom: 4px;
+    font-size: 10.5pt;
+    letter-spacing: normal !important;
+  }
+
+  .resume-paper ul {
+    margin-top: 2px;
+  }
+
+  .resume-paper li {
+    margin-bottom: 2px;
   }
 
   .resume-entry {
