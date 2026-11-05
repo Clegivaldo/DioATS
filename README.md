@@ -33,8 +33,9 @@ O JobMatch ATS fecha essa distância em quatro passos:
 E a regra que vale para o app inteiro: **ele melhora como a pessoa se apresenta, nunca inventa
 experiência que a pessoa não tem.** Por isso o app é construído em cima de três decisões visíveis:
 
-- nenhuma palavra-chave ausente é escrita no currículo gerado; ela vai para a lista “Ficou de fora”,
-  com uma pergunta de como preencher aquilo **se for verdade**;
+- nenhuma palavra-chave ausente vira competência ou experiência no currículo gerado; ela vai para a
+  lista “Ficou de fora”, com uma pergunta de como preencher aquilo **se for verdade** — o cargo-alvo
+  pode ser citado no objetivo, porque é a vaga que está sendo pleiteada;
 - cargos, empresas, datas, formação e idiomas do currículo original são preservados literalmente;
 - quando a versão ajustada não ganha cobertura de palavras-chave, a interface diz isso em vez de
   inventar um número; o ganho, nesse caso, é de formato e ordem de leitura.
@@ -55,7 +56,12 @@ Scripts de diagnóstico do motor (imprimem a análise de ponta a ponta no termin
 ```bash
 npx esbuild scripts/eval-engine.ts --bundle --platform=node --format=esm --outfile=.eval.mjs && node .eval.mjs
 npx esbuild scripts/debug-parse.ts  --bundle --platform=node --format=esm --outfile=.debug.mjs && node .debug.mjs
+npx esbuild scripts/audit.ts        --bundle --platform=node --format=esm --outfile=.audit.mjs && node .audit.mjs
 ```
+
+O `audit.ts` roda casos de currículo colados de PDF/DOCX (sem títulos, títulos em caixa alta,
+markdown) e falha se a experiência for perdida ou se um termo ausente virar competência no currículo
+gerado.
 
 ---
 
@@ -480,6 +486,8 @@ Estes foram os refinamentos feitos olhando a aplicação rodando — cada um nas
 | Idiomas e formação separados da lista de competências | “Inglês intermediário” não é competência; competência duplicada (“Excel” e “Excel avançado”) polui a leitura do ATS. |
 | “Ficou de fora” com dicas por categoria (ferramenta, comportamental, certificação…) | Uma lista de termos sem ação não ajuda quem não sabe o que fazer com ela. |
 | Exemplos prontos no app (dois pares vaga/currículo) | Sem exemplo, a pessoa não sabe o nível de detalhe esperado no texto colado. |
+| Fallback para currículo sem títulos de seção (separa experiência, formação e competências por período e ano) | Currículo colado de PDF às vezes perde os títulos: o histórico inteiro virava cabeçalho e a seção de experiência desaparecia do resultado. Detectado pela auditoria de casos. |
+| “8 dígitos” deixou de valer como telefone no cabeçalho | O período “2019 - 2021” era lido como telefone e cortava o histórico no meio. Agora o critério é formato de telefone com DDD. |
 
 ---
 
@@ -495,7 +503,8 @@ Estes foram os refinamentos feitos olhando a aplicação rodando — cada um nas
 ├── docs/screenshots/           # prints usados neste README
 ├── scripts/
 │   ├── eval-engine.ts          # roda a análise dos exemplos e imprime tudo no terminal
-│   └── debug-parse.ts          # mostra como o parser classifica cada linha do currículo
+│   ├── debug-parse.ts          # mostra como o parser classifica cada linha do currículo
+│   └── audit.ts                # casos de currículo colado + verificação da regra de não inventar
 └── src/
     ├── App.tsx                 # estado do fluxo (colar → analisar → exportar)
     ├── components/

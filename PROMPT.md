@@ -27,7 +27,8 @@ Consequências obrigatórias, visíveis na interface e no código:
   texto original do currículo.
 - Nunca escrever uma palavra-chave que falta no corpo do currículo gerado. Palavras-chave ausentes
   aparecem em uma seção separada chamada **“Ficou de fora”**, com uma pergunta/dica de como
-  preencher aquilo caso seja verdade.
+  preencher aquilo caso seja verdade. O cargo-alvo pode ser citado no objetivo, porque é a vaga
+  pleiteada — nunca como competência, formação ou vivência.
 - O que falta e o que foi mudado são mostrados de forma explícita, termo por termo.
 - Se a versão otimizada não ganhar cobertura de palavras-chave, a interface diz isso com todas as
   letras — não infla número, não inventa “+37%”.

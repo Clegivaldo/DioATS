@@ -111,4 +111,10 @@
     break-inside: avoid;
     page-break-inside: avoid;
   }
+
+  /* Um título de seção nunca fica sozinho no pé da página. */
+  .resume-paper h2 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
 }

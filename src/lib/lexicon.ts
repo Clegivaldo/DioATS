@@ -286,7 +286,6 @@ export const LEXICON: Record<KeywordCategory, string[]> = {
     "scrum master",
     "mba",
     "pós-graduação",
-    "certificação",
     "itil",
     "cfa",
     "crc",

@@ -1,4 +1,4 @@
-import { BULLET_PREFIX, words } from "./text";
+import { BULLET_PREFIX, normalize, words } from "./text";
 
 export type SectionKey =
   | "resumo"
@@ -87,6 +87,8 @@ const SECTION_TITLES: Record<SectionKey, string> = {
 };
 
 const EMAIL_RE = /[\w.+-]+@[\w-]+\.[\w.]{2,}/g;
+/** Telefone com DDD — evita confundir período de cargo ("2019 - 2021") com contato. */
+const CONTACT_PHONE = /(\+55\s?)?(\(?\d{2,3}\)?[\s-]?)?9?\d{4}[\s-]\d{4}/;
 const PHONE_RE = /(\+?55[\s-]?)?(\(?\d{2,3}\)?[\s-]?)?\d{4,5}[\s-]?\d{4}/g;
 const LINK_RE = /((https?:\/\/)?(www\.)?(linkedin\.com|github\.com|gitlab\.com|behance\.net|medium\.com)\/[\w\-./?=&#%]+)/gi;
 
@@ -127,6 +129,49 @@ function splitSkills(lines: string[]): string[] {
 
 const DATE_RANGE = /\b(19|20)\d{2}\b/;
 const ROLE_LINE = /(20\d{2}|19\d{2})\s*[-–—a]+\s*(\d{2,4}|atual|o momento|presente|hoje)/i;
+const EDUCATION_HINT =
+  /(bacharelado|licenciatura|tecn[óo]logo|gradua[cç][aã]o|ensino superior|universidade|faculdade|centro universit[aá]rio|mestrado|doutorado|p[óo]s-gradua[cç][aã]o)/i;
+
+/**
+ * Currículo colado de PDF/DOCX costuma vir sem títulos de seção. Quando nenhum bloco de
+ * conteúdo foi reconhecido, separa o texto corrido por padrões: linha de período inicia
+ * uma experiência; linha de formação com ano vira Formação; o resto vira competências.
+ */
+function splitUntitledContent(
+  lines: string[],
+  buckets: Record<SectionKey, string[]>,
+  order: SectionKey[],
+): void {
+  const clean = lines.filter((line) => line.trim());
+  const firstPeriod = clean.findIndex(
+    (line) => ROLE_LINE.test(line) || /\(\s*(19|20)\d{2}\s*[-–—]/.test(line),
+  );
+  if (firstPeriod < 0) return;
+
+  const preamble = clean.slice(0, firstPeriod);
+  const body = clean.slice(firstPeriod);
+  const educationIndex = body.findIndex(
+    (line) => EDUCATION_HINT.test(line) && /(19|20)\d{2}/.test(line),
+  );
+
+  buckets.experiencia = educationIndex >= 0 ? body.slice(0, educationIndex) : body;
+  if (!order.includes("experiencia")) order.push("experiencia");
+
+  if (educationIndex >= 0) {
+    const tail = body.slice(educationIndex);
+    buckets.formacao = [tail[0]];
+    if (!order.includes("formacao")) order.push("formacao");
+    const tailSkills = tail.slice(1).filter((line) => !/@|https?:|www\./.test(line));
+    const listSkills = tailSkills.filter((line) => /[,;|]/.test(line));
+    const skills = listSkills.length > 0 ? listSkills : tailSkills;
+    if (skills.length > 0) {
+      buckets.competencias = skills;
+      if (!order.includes("competencias")) order.push("competencias");
+    }
+  }
+
+  buckets.resumo = preamble.filter((line) => line.length > 30);
+}
 
 function parseExperience(lines: string[]): ResumeExperience[] {
   const blocks: string[][] = [];
@@ -238,6 +283,23 @@ export function parseResume(raw: string): ResumeProfile {
     }
   }
 
+  const hasContentSection =
+    buckets.experiencia.some(Boolean) || buckets.formacao.some(Boolean) || buckets.competencias.some(Boolean);
+
+  if (!hasContentSection && headerLines.length > 2) {
+    const nameLine = pickName(headerLines);
+    let lastContact = 0;
+    headerLines.forEach((line, index) => {
+      if (EMAIL_RE.test(line) || LINK_RE.test(line) || CONTACT_PHONE.test(line)) lastContact = index;
+    });
+    const nameIndex = headerLines.findIndex(
+      (line) => nameLine !== "" && normalize(line.replace(/^#+\s*/, "")) === normalize(nameLine),
+    );
+    const cut = Math.max(lastContact, nameIndex, 0) + 1;
+    const overflow = headerLines.splice(cut);
+    if (overflow.length > 0) splitUntitledContent([...overflow, ...buckets.resumo], buckets, order);
+  }
+
   const joined = text;
   const emails = Array.from(new Set(joined.match(EMAIL_RE) ?? []));
   const phones = Array.from(
@@ -245,12 +307,14 @@ export function parseResume(raw: string): ResumeProfile {
   );
   const links = Array.from(new Set((joined.match(LINK_RE) ?? []).map((l) => l.replace(/\/$/, ""))));
 
+  const detectedName = pickName(headerLines);
   const locationLines = headerLines.filter((line) => {
-    if (line === pickName(headerLines)) return false;
-    if (/@|https?:|www\.|linkedin\.com|github\.com/.test(line)) return false;
-    const digits = line.replace(/\D/g, "").length;
-    if (digits >= 8) return false;
-    return line.length <= 60;
+    const cleanedLine = line.replace(/^#+\s*/, "").trim();
+    if (!cleanedLine) return false;
+    if (normalize(cleanedLine) === normalize(detectedName)) return false;
+    if (/@|https?:|www\.|linkedin\.com|github\.com/.test(cleanedLine)) return false;
+    if (CONTACT_PHONE.test(cleanedLine)) return false;
+    return cleanedLine.length <= 60;
   });
 
   const summary = buckets.resumo
@@ -276,7 +340,7 @@ export function parseResume(raw: string): ResumeProfile {
   const bulletCount = lines.filter((line) => BULLET_PREFIX.test(line)).length;
 
   return {
-    name: pickName(headerLines),
+    name: detectedName,
     emails,
     phones,
     links,

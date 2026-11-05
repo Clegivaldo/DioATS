@@ -1,0 +1,47 @@
+=== casos de currículo ===
+
+--- sem nenhum título de seção
+nome: "João Pedro Lima" | experiencias: 2 | secoes: resumo,experiencia,formacao,competencias
+score: 65% | depois: 73% | keywords: Zendesk, Excel, Atendimento ao cliente, SQL, Inglês intermediário, SLA, ITIL
+nao incluidas: SQL, SLA, ITIL
+gerado (inicio): João Pedro Lima / joao.lima@email.com / (21) 98888-7777 / linkedin.com/in/joaolima /  / RESUMO PROFISSIONAL / Profissional com competências em Zendesk, Excel e Atendimento ao cliente. Objetivo
+PASS  nome detectado — João Pedro Lima
+PASS  experiência reconhecida — 2 bloco(s)
+PASS  e-mail preservado
+PASS  empresa preservada
+PASS  seção de experiência no texto gerado
+PASS  nenhum termo ausente apresentado como competência
+
+--- títulos em CAIXA ALTA e bullets com hífen
+nome: "MARIA SOUZA" | experiencias: 1 | secoes: resumo,experiencia,formacao,competencias
+score: 73% | depois: 73% | keywords: Zendesk, Excel, Atendimento ao cliente, SQL, Inglês intermediário, SLA, ITIL
+nao incluidas: SQL, SLA, ITIL
+gerado (inicio): MARIA SOUZA / maria@email.com / (11) 97777-6666 /  / RESUMO PROFISSIONAL / Profissional de suporte com 6 anos de experiência. Foco em Zendesk, Excel e Atendimento ao cliente. Objetivo: Anali
+PASS  nome detectado — MARIA SOUZA
+PASS  experiência reconhecida — 1 bloco(s)
+PASS  e-mail preservado
+PASS  empresa preservada
+PASS  seção de experiência no texto gerado
+PASS  nenhum termo ausente apresentado como competência
+
+--- markdown com ## e tabela colada
+nome: "Carlos Andrade" | experiencias: 2 | secoes: resumo,experiencia,formacao,competencias
+score: 73% | depois: 73% | keywords: Zendesk, Excel, Atendimento ao cliente, SQL, Inglês intermediário, SLA, ITIL
+nao incluidas: SQL, SLA, ITIL
+gerado (inicio): Carlos Andrade / carlos@email.com / (31) 96666-5555 /  / RESUMO PROFISSIONAL / Atuar em suporte técnico. Foco em Zendesk, Excel e Atendimento ao cliente. Objetivo: Analista de Suporte Pleno.
+PASS  nome detectado — Carlos Andrade
+PASS  experiência reconhecida — 2 bloco(s)
+PASS  e-mail preservado
+PASS  empresa preservada
+PASS  seção de experiência no texto gerado
+PASS  nenhum termo ausente apresentado como competência
+
+=== regra de não inventar (exemplos oficiais) ===
+PASS  dados: termos ausentes não entram como competência
+PASS  dados: palavras-chave ausentes fora do corpo (só em objetivo)
+   skills: Power BI | SQL | Excel avançado | Análise de dados | Comunicação | Trabalho em equipe | VBA | Estatística descritiva
+PASS  cs: termos ausentes não entram como competência — Customer Success
+PASS  cs: palavras-chave ausentes fora do corpo (só em objetivo) — Customer Success
+   skills: Excel intermediário | Zendesk | Contabilidade | Atendimento ao cliente | Comunicação clara | Organização | Documentação
+
+Todos os casos passaram

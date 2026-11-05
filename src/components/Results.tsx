@@ -198,9 +198,11 @@ function KeywordsMissing({ analysis }: { analysis: Analysis }) {
         )}
       </div>
       <p className="mt-4 border-t border-line pt-3 text-[11.5px] leading-relaxed text-ink-muted">
-        Estes termos <strong className="font-semibold text-ink-soft">não</strong> foram escritos no seu currículo
-        ajustado: sem evidência de que você tem a experiência, incluí-los seria invenção. Trate a lista como perguntas
-        — se for verdade, escreva onde e como você usou.
+        Nenhum destes termos entrou como{" "}
+        <strong className="font-semibold text-ink-soft">competência ou experiência</strong> no currículo ajustado: sem
+        evidência no seu texto, incluí-los seria invenção. O cargo-alvo pode aparecer no objetivo — é o que você está
+        pleiteando —, mas nenhuma vivência foi criada. Trate a lista como perguntas: se for verdade, escreva onde e
+        como você usou.
       </p>
     </Card>
   );
