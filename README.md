@@ -520,6 +520,7 @@ Estes foram os refinamentos feitos olhando a aplicação rodando — cada um nas
 | Título do documento vira “Currículo — Nome” durante a impressão | O arquivo salvo herdava o título do site nos metadados; agora o nome sugerido é o do currículo. |
 | Exportação `.docx` gerada no navegador (OOXML mínimo, sem biblioteca) | O `.docx` estava fora do escopo original, mas é o formato que o RH edita. Gerar no cliente mantém o processamento local, e o verificador compara o texto do arquivo com o texto puro para provar que nada foi acrescentado. |
 | `.docx` ao lado de `.txt` e “Exportar PDF” | As três saídas precisam ser equivalentes em conteúdo: o `.docx` herda o mesmo currículo, com seções em estilo de título que o Word e o ATS reconhecem. |
+| Barra de exportação em 2×2 e rótulos sem quebra no celular | Em 320 px o rótulo “A4 · 1 coluna” e os botões quebravam no meio da palavra, e “Exportar PDF” ficava sozinho na segunda linha. O grid de duas colunas com 44 px dá alvo de toque confortável e mantém o botão principal ao lado do `.docx`. |
 
 ---
 
@@ -593,6 +594,8 @@ Os prints abaixo são gerados pelo próprio app, com o exemplo oficial carregado
 - Não há login, histórico nem banco de dados nesta versão — o desafio pede núcleo curto e funcionando.
 - O `.docx` é um pacote OOXML mínimo: uma coluna, sem imagens, tabelas ou cabeçalho/rodapé — o que
   também é o que o ATS lê melhor. Os bullets são texto com recuo, não listas nativas do Word.
+- O layout foi conferido em 320, 360 e 390 px; não existe teste automatizado de layout, então mudanças
+  de CSS exigem nova conferência visual nesses tamanhos.
 - A exportação em PDF depende do diálogo de impressão do navegador (escolher “Salvar como PDF”),
   que é o que mantém o texto selecionável. O arquivo é auditado por `scripts/export-pdf.mjs` (A4,
   margens, fonte mínima e texto por página); currículos muito longos ainda podem passar de uma

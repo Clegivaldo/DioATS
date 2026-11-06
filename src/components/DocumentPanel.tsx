@@ -43,14 +43,15 @@ export function DocumentPanel({ analysis, resume }: DocumentPanelProps) {
             enviar.
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <Button size="sm" variant="secondary" onClick={handleCopy}>
+        <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:flex-wrap sm:items-center">
+          <Button size="sm" variant="secondary" className="h-11 w-full sm:h-9 sm:w-auto" onClick={handleCopy}>
             {copied ? <Check className="h-3.5 w-3.5" aria-hidden="true" /> : <Copy className="h-3.5 w-3.5" aria-hidden="true" />}
             {copied ? "Copiado" : "Copiar texto"}
           </Button>
           <Button
             size="sm"
             variant="secondary"
+            className="h-11 w-full sm:h-9 sm:w-auto"
             onClick={() => downloadTextFile(resumeFileName(resume.name), resume.plainText)}
           >
             <Download className="h-3.5 w-3.5" aria-hidden="true" />
@@ -59,12 +60,17 @@ export function DocumentPanel({ analysis, resume }: DocumentPanelProps) {
           <Button
             size="sm"
             variant="secondary"
+            className="h-11 w-full sm:h-9 sm:w-auto"
             onClick={() => downloadBinaryFile(resumeDocxFileName(resume.name), buildDocx(resume), DOCX_MIME)}
           >
             <FileDown className="h-3.5 w-3.5" aria-hidden="true" />
             .docx
           </Button>
-          <Button size="sm" onClick={() => exportPdf(`Currículo — ${resume.name || "candidato"}`)}>
+          <Button
+            size="sm"
+            className="h-11 w-full sm:h-9 sm:w-auto"
+            onClick={() => exportPdf(`Currículo — ${resume.name || "candidato"}`)}
+          >
             <Printer className="h-3.5 w-3.5" aria-hidden="true" />
             Exportar PDF
           </Button>
@@ -83,7 +89,7 @@ export function DocumentPanel({ analysis, resume }: DocumentPanelProps) {
                 type="button"
                 onClick={() => setTab(item.id)}
                 className={cn(
-                  "inline-flex h-8 items-center gap-1.5 rounded-lg px-3 text-[12.5px] transition-colors",
+                  "inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg px-3 text-[12.5px] transition-colors",
                   tab === item.id
                     ? "bg-ink text-paper"
                     : "text-ink-muted hover:bg-ink/5 hover:text-ink",
@@ -94,7 +100,7 @@ export function DocumentPanel({ analysis, resume }: DocumentPanelProps) {
                 {item.label}
               </button>
             ))}
-            <span className="ml-auto font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-muted">
+            <span className="ml-auto hidden font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-muted sm:block">
               a4 · 1 coluna
             </span>
           </div>

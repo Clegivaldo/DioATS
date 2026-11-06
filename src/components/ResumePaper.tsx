@@ -4,10 +4,10 @@ export function ResumePaper({ resume }: { resume: GeneratedResume }) {
   return (
     <article
       id="resume-paper"
-      className="resume-paper paper-texture mx-auto w-full max-w-[794px] rounded-sm border border-line px-9 py-10 shadow-page sm:px-12 sm:py-12"
+      className="resume-paper paper-texture mx-auto w-full max-w-[794px] rounded-sm border border-line px-5 py-7 shadow-page sm:px-12 sm:py-12"
     >
       <header className="border-b border-[#d7d7d7] pb-3">
-        <h1>{resume.name || "Seu nome completo"}</h1>
+        <h1 className="text-[21px] leading-tight sm:text-[24px]">{resume.name || "Seu nome completo"}</h1>
         {resume.contactLines.length > 0 && (
           <p className="mt-1.5 text-[11.5px] text-[#3a3a3a]">{resume.contactLines.join("  ·  ")}</p>
         )}

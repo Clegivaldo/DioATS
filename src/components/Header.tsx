@@ -29,7 +29,8 @@ export function Header({ onStart }: { onStart: () => void }) {
         </nav>
 
         <Button size="sm" variant="dark" onClick={onStart}>
-          Analisar currículo
+          <span className="sm:hidden">Analisar</span>
+          <span className="hidden sm:inline">Analisar currículo</span>
         </Button>
       </div>
     </header>

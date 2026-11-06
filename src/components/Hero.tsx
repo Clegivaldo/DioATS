@@ -11,11 +11,11 @@ export function Hero({ onStart }: { onStart: () => void }) {
       />
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-14 md:py-20 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
-          <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-signal-lime">
+          <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.12em] text-signal-lime sm:text-[11px] sm:tracking-[0.18em]">
             <ScanLine className="h-3.5 w-3.5" aria-hidden="true" />
             Análise ATS · roda no seu navegador
           </p>
-          <h1 className="mt-4 font-serif text-[40px] leading-[1.02] tracking-[-0.015em] sm:text-[52px]">
+          <h1 className="mt-4 font-serif text-[34px] leading-[1.05] tracking-[-0.015em] sm:text-[52px] sm:leading-[1.02]">
             Currículo bom que nunca chega ao RH, porque o <span className="italic text-signal-lime">filtro</span>{" "}
             barrou antes.
           </h1>

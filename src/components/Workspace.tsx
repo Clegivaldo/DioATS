@@ -60,9 +60,9 @@ export function Workspace({
               spellCheck={false}
               aria-label="Descrição da vaga"
             />
-            <div className="mt-1.5 flex items-center justify-between text-[11px] text-ink-muted">
+            <div className="mt-1.5 flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 text-[11px] text-ink-muted">
               <span>Inclua também os “desejáveis”: eles entram com peso menor.</span>
-              <span className="font-mono">{jobWords} palavras</span>
+              <span className="shrink-0 whitespace-nowrap font-mono">{jobWords} palavras</span>
             </div>
           </div>
 
@@ -76,9 +76,9 @@ export function Workspace({
               spellCheck={false}
               aria-label="Currículo"
             />
-            <div className="mt-1.5 flex items-center justify-between text-[11px] text-ink-muted">
+            <div className="mt-1.5 flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 text-[11px] text-ink-muted">
               <span>Cabeçalho, experiências, formação e competências.</span>
-              <span className="font-mono">{resumeWords} palavras</span>
+              <span className="shrink-0 whitespace-nowrap font-mono">{resumeWords} palavras</span>
             </div>
           </div>
         </div>
