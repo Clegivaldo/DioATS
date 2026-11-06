@@ -1,5 +1,14 @@
 export function downloadTextFile(filename: string, content: string): void {
-  const blob = new Blob([`\uFEFF${content}`], { type: "text/plain;charset=utf-8" });
+  downloadBlob(filename, new Blob([`\uFEFF${content}`], { type: "text/plain;charset=utf-8" }));
+}
+
+export function downloadBinaryFile(filename: string, bytes: Uint8Array, mime: string): void {
+  const copy = new Uint8Array(bytes.byteLength);
+  copy.set(bytes);
+  downloadBlob(filename, new Blob([copy.buffer], { type: mime }));
+}
+
+function downloadBlob(filename: string, blob: Blob): void {
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;

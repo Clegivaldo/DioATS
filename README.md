@@ -71,7 +71,12 @@ página.
 ```bash
 npm run dev                      # em outro terminal
 npm run verify:pdf               # gera e audita docs/curriculo-exemplo.pdf e docs/curriculo-paginado.pdf
+npm run verify:docx              # gera e audita docs/curriculo-exemplo.docx
 ```
+
+O `.docx` tem verificação própria: `verify-docx.ts` monta o arquivo pelo mesmo código do botão,
+confere a integridade do ZIP e o XML de todas as partes e compara o texto extraído do documento com
+o texto puro do currículo. Se a exportação acrescentasse qualquer palavra, a comparação falharia.
 
 ---
 
@@ -401,6 +406,13 @@ Tabs/segmented control, Tooltip, Separator, Alert), com `class-variance-authorit
 - Títulos de seção sem `letter-spacing`: o espaçamento entre letras faz o texto do PDF ser extraído
   como “E X P E R I Ê N C I A”, e o ATS deixa de reconhecer a seção.
 
+### Exportação
+- PDF pelo diálogo de impressão (texto selecionável) e `.docx` gerado no navegador como pacote OOXML
+  mínimo — ZIP + `word/document.xml`, sem biblioteca: uma coluna, A4, títulos com estilo `Heading1`
+  e bullets como texto com recuo pendente.
+- O `.docx` é montado a partir do mesmo objeto que gera a prévia e o PDF. Não existe caminho para
+  incluir termo, cargo ou empresa que não esteja no currículo original.
+
 ## 9. Copy e tom
 
 - Português do Brasil, direto, sem jargão de RH e sem promessa mágica.
@@ -464,6 +476,9 @@ Tabs/segmented control, Tooltip, Separator, Alert), com `class-variance-authorit
 
 ````
 
+A exportação `.docx`, que o prompt original deixava fora de escopo, entrou depois como formato
+editável — o registro está na tabela de ajustes abaixo.
+
 ### O que mudou no prompt até a versão final
 
 O prompt foi escrito em duas versões. A primeira descrevia telas e um “score de aderência”; a versão
@@ -503,6 +518,8 @@ Estes foram os refinamentos feitos olhando a aplicação rodando — cada um nas
 | Títulos de seção sem espaçamento entre letras na folha | Com `letter-spacing`, o PDF exportava “E X P E R I Ê N C I A” e o extrator do ATS não reconhecia a seção. Descoberto ao extrair o texto do PDF gerado. |
 | Impressão compactada (margem 12 mm, 11pt/1,5, títulos com menos respiro) e PDF auditado por script | Um currículo de três experiências vazava só “Idiomas” para a página 2. Agora fecha em uma página, com margens, fonte mínima e texto por página verificados em Chromium headless. |
 | Título do documento vira “Currículo — Nome” durante a impressão | O arquivo salvo herdava o título do site nos metadados; agora o nome sugerido é o do currículo. |
+| Exportação `.docx` gerada no navegador (OOXML mínimo, sem biblioteca) | O `.docx` estava fora do escopo original, mas é o formato que o RH edita. Gerar no cliente mantém o processamento local, e o verificador compara o texto do arquivo com o texto puro para provar que nada foi acrescentado. |
+| `.docx` ao lado de `.txt` e “Exportar PDF” | As três saídas precisam ser equivalentes em conteúdo: o `.docx` herda o mesmo currículo, com seções em estilo de título que o Word e o ATS reconhecem. |
 
 ---
 
@@ -517,11 +534,13 @@ Estes foram os refinamentos feitos olhando a aplicação rodando — cada um nas
 ├── worker/index.js             # Worker que serve o build (env.ASSETS)
 ├── docs/screenshots/           # prints usados neste README
 ├── docs/*.pdf                  # PDFs gerados e auditados pelo script de verificação
+├── docs/*.docx                 # .docx de exemplo validado fora do navegador
 ├── scripts/
 │   ├── eval-engine.ts          # roda a análise dos exemplos e imprime tudo no terminal
 │   ├── debug-parse.ts          # mostra como o parser classifica cada linha do currículo
 │   ├── audit.ts                # casos de currículo colado + verificação da regra de não inventar
-│   └── export-pdf.mjs          # gera o PDF em Chromium headless e audita páginas, margens e texto
+│   ├── export-pdf.mjs          # gera o PDF em Chromium headless e audita páginas, margens e texto
+│   └── verify-docx.ts          # valida o pacote .docx e compara o conteúdo com o texto puro
 └── src/
     ├── App.tsx                 # estado do fluxo (colar → analisar → exportar)
     ├── components/
@@ -537,6 +556,7 @@ Estes foram os refinamentos feitos olhando a aplicação rodando — cada um nas
         ├── generate.ts         # versão ajustada + registro de mudanças
         ├── lexicon.ts          # léxico de competências/ferramentas
         ├── text.ts             # normalização, sinônimos, grafia de exibição
+        ├── docx.ts             # pacote OOXML mínimo (ZIP + document.xml) do .docx
         └── export.ts           # PDF (impressão), cópia, download
 ```
 
@@ -567,6 +587,8 @@ Estes foram os refinamentos feitos olhando a aplicação rodando — cada um nas
 - A variação (60%) cobre plural e pequenas mudanças de palavra, não sinônimos amplos
   (“painéis” não é reconhecido como “dashboards”).
 - Não há login, histórico nem banco de dados nesta versão — o desafio pede núcleo curto e funcionando.
+- O `.docx` é um pacote OOXML mínimo: uma coluna, sem imagens, tabelas ou cabeçalho/rodapé — o que
+  também é o que o ATS lê melhor. Os bullets são texto com recuo, não listas nativas do Word.
 - A exportação em PDF depende do diálogo de impressão do navegador (escolher “Salvar como PDF”),
   que é o que mantém o texto selecionável. O arquivo é auditado por `scripts/export-pdf.mjs` (A4,
   margens, fonte mínima e texto por página); currículos muito longos ainda podem passar de uma
@@ -583,4 +605,5 @@ Estes foram os refinamentos feitos olhando a aplicação rodando — cada um nas
 - [x] Nenhuma chave, token ou senha no repositório (`.gitignore` cobre `.env*`)
 - [x] Build e typecheck passando (`npm run build`)
 - [x] PDF gerado e conferido fora do navegador (A4, uma página, texto selecionável)
+- [x] `.docx` validado fora do navegador (ZIP, XML e conteúdo idêntico ao texto puro)
 - [ ] Repositório público no GitHub (criar e enviar — instruções no fim desta seção)

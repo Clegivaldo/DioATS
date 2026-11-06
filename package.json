@@ -9,7 +9,8 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "verify:pdf": "node scripts/export-pdf.mjs"
+    "verify:pdf": "node scripts/export-pdf.mjs",
+    "verify:docx": "npx esbuild scripts/verify-docx.ts --bundle --platform=node --format=esm --outfile=.docx.mjs && node .docx.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

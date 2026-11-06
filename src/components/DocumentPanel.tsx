@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { Check, Copy, Download, FileText, Printer, ShieldAlert } from "lucide-react";
+import { Check, Copy, Download, FileDown, FileText, Printer, ShieldAlert } from "lucide-react";
 import type { Analysis } from "../lib/analyze";
-import { copyText, downloadTextFile, exportPdf } from "../lib/export";
+import { DOCX_MIME, buildDocx, resumeDocxFileName } from "../lib/docx";
+import { copyText, downloadBinaryFile, downloadTextFile, exportPdf } from "../lib/export";
 import { resumeFileName, type GeneratedResume } from "../lib/generate";
 import { cn } from "../lib/cn";
 import { ResumePaper } from "./ResumePaper";
@@ -54,6 +55,14 @@ export function DocumentPanel({ analysis, resume }: DocumentPanelProps) {
           >
             <Download className="h-3.5 w-3.5" aria-hidden="true" />
             .txt
+          </Button>
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={() => downloadBinaryFile(resumeDocxFileName(resume.name), buildDocx(resume), DOCX_MIME)}
+          >
+            <FileDown className="h-3.5 w-3.5" aria-hidden="true" />
+            .docx
           </Button>
           <Button size="sm" onClick={() => exportPdf(`Currículo — ${resume.name || "candidato"}`)}>
             <Printer className="h-3.5 w-3.5" aria-hidden="true" />
@@ -113,7 +122,8 @@ export function DocumentPanel({ analysis, resume }: DocumentPanelProps) {
           <p className="mt-3 text-[11.5px] leading-relaxed text-ink-muted print-hide">
             Na caixa de impressão, escolha <strong className="font-medium text-ink-soft">Salvar como PDF</strong> e
             desative cabeçalho e rodapé do navegador. O texto do PDF é selecionável, então o parser consegue ler
-            linha por linha.
+            linha por linha. O <strong className="font-medium text-ink-soft">.docx</strong> tem o mesmo conteúdo da
+            prévia, editável no Word.
           </p>
         </div>
 

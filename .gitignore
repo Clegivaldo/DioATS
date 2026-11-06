@@ -21,3 +21,6 @@ freebuff.wrangler.jsonc
 # artefatos da auditoria
 .audit.mjs
 .audit.txt
+
+# artefato da verificação do .docx
+.docx.mjs

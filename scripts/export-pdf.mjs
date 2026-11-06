@@ -242,6 +242,25 @@ async function main() {
 
     await verifyExportButton();
 
+    // O botão .docx monta o pacote OOXML no próprio navegador e baixa como Blob.
+    await page.evaluate(() => {
+      window.__docx = null;
+      const create = URL.createObjectURL.bind(URL);
+      URL.createObjectURL = (blob) => {
+        window.__docx = { type: blob.type, size: blob.size };
+        return create(blob);
+      };
+    });
+    await clickText(".docx");
+    const docxState = await page.evaluate(() => window.__docx);
+    console.log(
+      `botão .docx: ${docxState ? `${Math.round(docxState.size / 1024)} kB, ${docxState.type}` : "nada baixado"}`,
+    );
+    if (!docxState || docxState.size < 5000) problems.push("botão .docx não gerou o arquivo");
+    if (docxState?.type !== "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+      problems.push("MIME do .docx incorreto");
+    }
+
     const printOptions = { printBackground: true, preferCSSPageSize: true };
     const examplePdf = await page.pdf(printOptions);
     await writeFile(EXAMPLE_PDF, examplePdf);

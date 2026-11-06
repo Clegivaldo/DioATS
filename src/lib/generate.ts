@@ -301,7 +301,7 @@ export function generateResume(analysis: Analysis): GeneratedResume {
   changes.push({
     title: "Formatação de uma coluna só",
     detail:
-      "Sem tabelas, colunas ou caixas de texto. A exportação em PDF usa texto selecionável, o formato que o parser lê sem perder linha.",
+      "Sem tabelas, colunas ou caixas de texto. O PDF sai com texto selecionável e o .docx com o mesmo conteúdo, em uma coluna editável.",
   });
 
   const gains = after.score - analysis.score;
