@@ -521,6 +521,7 @@ Estes foram os refinamentos feitos olhando a aplicação rodando — cada um nas
 | Exportação `.docx` gerada no navegador (OOXML mínimo, sem biblioteca) | O `.docx` estava fora do escopo original, mas é o formato que o RH edita. Gerar no cliente mantém o processamento local, e o verificador compara o texto do arquivo com o texto puro para provar que nada foi acrescentado. |
 | `.docx` ao lado de `.txt` e “Exportar PDF” | As três saídas precisam ser equivalentes em conteúdo: o `.docx` herda o mesmo currículo, com seções em estilo de título que o Word e o ATS reconhecem. |
 | Barra de exportação em 2×2 e rótulos sem quebra no celular | Em 320 px o rótulo “A4 · 1 coluna” e os botões quebravam no meio da palavra, e “Exportar PDF” ficava sozinho na segunda linha. O grid de duas colunas com 44 px dá alvo de toque confortável e mantém o botão principal ao lado do `.docx`. |
+| Alvos de toque de 44 px no celular | O botão do cabeçalho, “Carregar exemplo”, “Limpar”, as abas da prévia e os links do rodapé tinham entre 17 e 36 px de altura. Abaixo de 640 px todos chegam a 44 px; o desktop mantém as alturas originais. |
 
 ---
 

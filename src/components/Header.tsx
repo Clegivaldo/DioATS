@@ -4,7 +4,7 @@ export function Header({ onStart }: { onStart: () => void }) {
   return (
     <header className="print-hide sticky top-0 z-40 border-b border-line/80 bg-paper/85 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
-        <a href="#top" className="flex items-center gap-2.5">
+        <a href="#top" className="flex min-h-11 items-center gap-2.5 sm:min-h-0">
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-ink font-mono text-[13px] font-medium text-signal-lime">
             jm
           </span>
@@ -28,7 +28,7 @@ export function Header({ onStart }: { onStart: () => void }) {
           </a>
         </nav>
 
-        <Button size="sm" variant="dark" onClick={onStart}>
+        <Button size="sm" variant="dark" className="h-11 sm:h-9" onClick={onStart}>
           <span className="sm:hidden">Analisar</span>
           <span className="hidden sm:inline">Analisar currículo</span>
         </Button>

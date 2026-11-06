@@ -12,13 +12,13 @@ export function Footer() {
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-4 text-[11.5px] text-ink-muted">
-          <a href="#analise" className="hover:text-ink">
+          <a href="#analise" className="inline-flex min-h-11 items-center hover:text-ink sm:min-h-0">
             Analisar
           </a>
-          <a href="#como-funciona" className="hover:text-ink">
+          <a href="#como-funciona" className="inline-flex min-h-11 items-center hover:text-ink sm:min-h-0">
             Como funciona
           </a>
-          <a href="#transparencia" className="hover:text-ink">
+          <a href="#transparencia" className="inline-flex min-h-11 items-center hover:text-ink sm:min-h-0">
             Regras
           </a>
           <span className="font-mono">React + Vite · 100% no navegador</span>

@@ -101,7 +101,7 @@ export function HowItWorks() {
           </div>
           <a
             href="#analise"
-            className="mt-4 inline-flex items-center gap-1.5 text-[12.5px] font-medium text-brand-600 hover:text-brand-700"
+            className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-[12.5px] font-medium text-brand-600 hover:text-brand-700 sm:min-h-0"
           >
             Analisar meu currículo
             <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />

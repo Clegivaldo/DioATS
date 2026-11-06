@@ -89,7 +89,7 @@ export function DocumentPanel({ analysis, resume }: DocumentPanelProps) {
                 type="button"
                 onClick={() => setTab(item.id)}
                 className={cn(
-                  "inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg px-3 text-[12.5px] transition-colors",
+                  "inline-flex h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg px-3 text-[12.5px] transition-colors sm:h-8",
                   tab === item.id
                     ? "bg-ink text-paper"
                     : "text-ink-muted hover:bg-ink/5 hover:text-ink",

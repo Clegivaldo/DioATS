@@ -37,11 +37,11 @@ export function Workspace({
           </h2>
         </div>
         <div className="flex items-center gap-2">
-          <Button size="sm" variant="secondary" onClick={onLoadExample}>
+          <Button size="sm" variant="secondary" className="h-11 sm:h-9" onClick={onLoadExample}>
             <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
             Carregar exemplo
           </Button>
-          <Button size="sm" variant="ghost" onClick={onClear} disabled={!hasContent}>
+          <Button size="sm" variant="ghost" className="h-11 sm:h-9" onClick={onClear} disabled={!hasContent}>
             <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
             Limpar
           </Button>
