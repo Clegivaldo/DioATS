@@ -540,7 +540,8 @@ Estes foram os refinamentos feitos olhando a aplicação rodando — cada um nas
 │   ├── debug-parse.ts          # mostra como o parser classifica cada linha do currículo
 │   ├── audit.ts                # casos de currículo colado + verificação da regra de não inventar
 │   ├── export-pdf.mjs          # gera o PDF em Chromium headless e audita páginas, margens e texto
-│   └── verify-docx.ts          # valida o pacote .docx e compara o conteúdo com o texto puro
+│   ├── verify-docx.ts          # valida o pacote .docx e compara o conteúdo com o texto puro
+│   └── screenshots.mjs         # gera os prints do README com a interface atual
 └── src/
     ├── App.tsx                 # estado do fluxo (colar → analisar → exportar)
     ├── components/
@@ -563,6 +564,9 @@ Estes foram os refinamentos feitos olhando a aplicação rodando — cada um nas
 ---
 
 ## Prints
+
+Os prints abaixo são gerados pelo próprio app, com o exemplo oficial carregado: `npm run shots`
+(viewport 1280×1000 em 2×, Chromium headless).
 
 **Hero e regra da casa**
 
